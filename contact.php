@@ -55,7 +55,7 @@
                                         }
 
                                         $message = sprintf(__("%s (%s) left this message : %s"), $yourName, $yourEmail, $message);
-                                        
+
                                         $params = array(
                                             'reply_to' => $yourEmail
                                             ,'subject' => '[' . osc_page_title() . '] ' . __('Contact form') . ': ' . $subject

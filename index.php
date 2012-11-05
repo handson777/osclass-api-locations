@@ -65,6 +65,8 @@
         User::newInstance()->lastAccess(osc_logged_user_id(), date('Y-m-d H:i:s'), $_SERVER['REMOTE_ADDR'], 3600);
     }
 
+    // TODO: how to route directly
+
 
     switch( Params::getParam('page') )
     {
