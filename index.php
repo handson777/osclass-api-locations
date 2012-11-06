@@ -25,7 +25,11 @@
     }
 
     require_once ABS_PATH . 'oc-load.php' ;
+    /**
 
+
+
+    */
     if( CLI ) {
         $cli_params = getopt('p:');
         Params::setParam('page', $cli_params['p']);
@@ -33,7 +37,11 @@
             exit(1);
         }
     }
+    /**
+    ABS PATH does what ?
 
+
+    */
     if( file_exists(ABS_PATH . '.maintenance') ) {
         if(!osc_is_admin_user_logged_in()) {
             require_once LIB_PATH . 'osclass/helpers/hErrors.php' ;
@@ -49,7 +57,11 @@
             define('__OSC_MAINTENANCE__', true);
         }
     }
+    /**
+    osc_users_enabled
 
+
+    */
     if(!osc_users_enabled() && osc_is_web_user_logged_in()) {
         Session::newInstance()->_drop('userId') ;
         Session::newInstance()->_drop('userName') ;
@@ -65,8 +77,27 @@
         User::newInstance()->lastAccess(osc_logged_user_id(), date('Y-m-d H:i:s'), $_SERVER['REMOTE_ADDR'], 3600);
     }
 
-    // TODO: how to route directly
+    /**
+    mobile api
 
+
+    */
+    switch(Params::getParam('api')) {
+        case ('property')
+            echo 'property';
+        break;
+        case ('mobile'):   //mobile : custom added
+                            require_once(osc_base_path() . 'api/mobile.php') ;
+                            $do = new CWebMobile() ;
+                            $do->doModel() ;
+        break;
+        default:            // home and static pages that are mandatory...
+                            require_once(osc_base_path() . 'main.php') ;
+                            $do = new CWebMain() ;
+                            $do->doModel() ;
+        break;
+
+    }
 
     switch( Params::getParam('page') )
     {
@@ -131,11 +162,6 @@
         case ('custom'):   //contact
                             require_once(osc_base_path() . 'custom.php') ;
                             $do = new CWebCustom() ;
-                            $do->doModel() ;
-        break;
-        case ('mobile'):   //mobile : custom added
-                            require_once(osc_base_path() . 'api/mobile.php') ;
-                            $do = new CWebMobile() ;
                             $do->doModel() ;
         break;
         default:            // home and static pages that are mandatory...
